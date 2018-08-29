@@ -1,0 +1,245 @@
+{
+    "namespace": "wp/v2",
+    "methods": [
+        "GET",
+        "POST"
+    ],
+    "endpoints": [
+        {
+            "methods": [
+                "GET"
+            ],
+            "args": {
+                "context": {
+                    "required": false,
+                    "default": "view",
+                    "enum": [
+                        "view",
+                        "embed",
+                        "edit"
+                    ],
+                    "description": "Рамки в которых сделан запрос, определяют поля в ответе.",
+                    "type": "string"
+                },
+                "page": {
+                    "required": false,
+                    "default": 1,
+                    "description": "Текущая страница коллекции.",
+                    "type": "integer"
+                },
+                "per_page": {
+                    "required": false,
+                    "default": 10,
+                    "description": "Максимальное число объектов возвращаемое в выборке.",
+                    "type": "integer"
+                },
+                "search": {
+                    "required": false,
+                    "description": "Ограничить результаты до совпадающих со строкой.",
+                    "type": "string"
+                },
+                "exclude": {
+                    "required": false,
+                    "default": [],
+                    "description": "Убедиться что выборка исключает определенные ID.",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "include": {
+                    "required": false,
+                    "default": [],
+                    "description": "Ограничить выборку до определенных ID.",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "order": {
+                    "required": false,
+                    "default": "asc",
+                    "enum": [
+                        "asc",
+                        "desc"
+                    ],
+                    "description": "Упорядочить сортировку атрибута по возрастанию или убыванию.",
+                    "type": "string"
+                },
+                "orderby": {
+                    "required": false,
+                    "default": "name",
+                    "enum": [
+                        "id",
+                        "include",
+                        "name",
+                        "slug",
+                        "include_slugs",
+                        "term_group",
+                        "description",
+                        "count"
+                    ],
+                    "description": "Сортировать коллекцию по атрибутам элемента.",
+                    "type": "string"
+                },
+                "hide_empty": {
+                    "required": false,
+                    "default": false,
+                    "description": "Скрывать ли элементы не назначенные ни одной записи.",
+                    "type": "boolean"
+                },
+                "parent": {
+                    "required": false,
+                    "description": "Ограничить выборку элементами назначенными определенному родителю.",
+                    "type": "integer"
+                },
+                "post": {
+                    "required": false,
+                    "description": "Ограничить выборку элементами назначенными определенной записи.",
+                    "type": "integer"
+                },
+                "slug": {
+                    "required": false,
+                    "description": "Ограничить выборку элементами с одним или более специальными ярлыками. ",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        {
+            "methods": [
+                "POST"
+            ],
+            "args": {
+                "description": {
+                    "required": false,
+                    "description": "HTML описание элемента.",
+                    "type": "string"
+                },
+                "name": {
+                    "required": true,
+                    "description": "HTML название элемента.",
+                    "type": "string"
+                },
+                "slug": {
+                    "required": false,
+                    "description": "Буквенно-цифровой идентификатор элемента уникальный для его типа.",
+                    "type": "string"
+                },
+                "parent": {
+                    "required": false,
+                    "description": "ID элемента родителя.",
+                    "type": "integer"
+                },
+                "meta": {
+                    "required": false,
+                    "description": "Мета поля.",
+                    "type": "object"
+                }
+            }
+        }
+    ],
+    "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "category",
+        "type": "object",
+        "properties": {
+            "id": {
+                "description": "Уникальный идентификатор элемента.",
+                "type": "integer",
+                "context": [
+                    "view",
+                    "embed",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "count": {
+                "description": "Число опубликованных записей элемента.",
+                "type": "integer",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "description": {
+                "description": "HTML описание элемента.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit"
+                ]
+            },
+            "link": {
+                "description": "URL элемента.",
+                "type": "string",
+                "format": "uri",
+                "context": [
+                    "view",
+                    "embed",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "name": {
+                "description": "HTML название элемента.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "embed",
+                    "edit"
+                ],
+                "required": true
+            },
+            "slug": {
+                "description": "Буквенно-цифровой идентификатор элемента уникальный для его типа.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "embed",
+                    "edit"
+                ]
+            },
+            "taxonomy": {
+                "description": "Тип атрибуции элемента.",
+                "type": "string",
+                "enum": [
+                    "category",
+                    "post_tag",
+                    "nav_menu",
+                    "link_category",
+                    "post_format"
+                ],
+                "context": [
+                    "view",
+                    "embed",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "parent": {
+                "description": "ID элемента родителя.",
+                "type": "integer",
+                "context": [
+                    "view",
+                    "edit"
+                ]
+            },
+            "meta": {
+                "description": "Мета поля.",
+                "type": "object",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "properties": []
+            }
+        }
+    },
+    "_links": {
+        "self": "http://wptest.ru/wp-json/wp/v2/categories"
+    }
+}
