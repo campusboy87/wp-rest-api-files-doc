@@ -1,0 +1,458 @@
+{
+    "namespace": "wp/v2",
+    "methods": [
+        "GET",
+        "POST"
+    ],
+    "endpoints": [
+        {
+            "methods": [
+                "GET"
+            ],
+            "args": {
+                "context": {
+                    "required": false,
+                    "default": "view",
+                    "enum": [
+                        "view",
+                        "embed",
+                        "edit"
+                    ],
+                    "description": "Рамки в которых сделан запрос, определяют поля в ответе.",
+                    "type": "string"
+                },
+                "page": {
+                    "required": false,
+                    "default": 1,
+                    "description": "Текущая страница коллекции.",
+                    "type": "integer"
+                },
+                "per_page": {
+                    "required": false,
+                    "default": 10,
+                    "description": "Максимальное число объектов возвращаемое в выборке.",
+                    "type": "integer"
+                },
+                "search": {
+                    "required": false,
+                    "description": "Ограничить результаты до совпадающих со строкой.",
+                    "type": "string"
+                },
+                "after": {
+                    "required": false,
+                    "description": "Ограничить ответ комментариями опубликованными после заданной ISO8601 совместимой даты.",
+                    "type": "string"
+                },
+                "author": {
+                    "required": false,
+                    "description": "Ограничить выборку комментариями назначенными определенному ID пользователя. Требует авторизации.",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "author_exclude": {
+                    "required": false,
+                    "description": "Убедиться что выборка исключает комментарии назначенные определенному ID пользователя. Требует авторизации.",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "author_email": {
+                    "required": false,
+                    "description": "Ограничить выборку до имеющей определённый e-mail автора. Требует авторизации.",
+                    "type": "string"
+                },
+                "before": {
+                    "required": false,
+                    "description": "Ограничить ответ комментариями опубликованными до заданной ISO8601 совместимой даты.",
+                    "type": "string"
+                },
+                "exclude": {
+                    "required": false,
+                    "default": [],
+                    "description": "Убедиться что выборка исключает определенные ID.",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "include": {
+                    "required": false,
+                    "default": [],
+                    "description": "Ограничить выборку до определенных ID.",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "offset": {
+                    "required": false,
+                    "description": "Сдвиг выборки на определенное число объектов.",
+                    "type": "integer"
+                },
+                "order": {
+                    "required": false,
+                    "default": "desc",
+                    "enum": [
+                        "asc",
+                        "desc"
+                    ],
+                    "description": "Упорядочить сортировку атрибута по возрастанию или убыванию.",
+                    "type": "string"
+                },
+                "orderby": {
+                    "required": false,
+                    "default": "date_gmt",
+                    "enum": [
+                        "date",
+                        "date_gmt",
+                        "id",
+                        "include",
+                        "post",
+                        "parent",
+                        "type"
+                    ],
+                    "description": "Сортировать коллекцию по атрибуту объекта.",
+                    "type": "string"
+                },
+                "parent": {
+                    "required": false,
+                    "default": [],
+                    "description": "Ограничить выборку комментариями с определенными родительскими ID.",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "parent_exclude": {
+                    "required": false,
+                    "default": [],
+                    "description": "Убедиться что выборка исключает определенные родительские ID.",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "post": {
+                    "required": false,
+                    "default": [],
+                    "description": "Ограничить выборку комментариями с назначенными определенными ID записей.",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "status": {
+                    "required": false,
+                    "default": "approve",
+                    "description": "Ограничить выборку комментариями с определенным статусом. Требует авторизации. ",
+                    "type": "string"
+                },
+                "type": {
+                    "required": false,
+                    "default": "comment",
+                    "description": "Ограничить выборку комментариями с определенным типом. Требует авторизации.",
+                    "type": "string"
+                },
+                "password": {
+                    "required": false,
+                    "description": "Пароль для записи, если она защищена паролем.",
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "methods": [
+                "POST"
+            ],
+            "args": {
+                "author": {
+                    "required": false,
+                    "description": "ID объекта пользователя, если автор - пользователь.",
+                    "type": "integer"
+                },
+                "author_email": {
+                    "required": false,
+                    "description": "Адрес e-mail автора объекта.",
+                    "type": "string"
+                },
+                "author_ip": {
+                    "required": false,
+                    "description": "IP адрес автора объекта.",
+                    "type": "string"
+                },
+                "author_name": {
+                    "required": false,
+                    "description": "Отображаемое имя для автора объекта.",
+                    "type": "string"
+                },
+                "author_url": {
+                    "required": false,
+                    "description": "URL для автора объекта.",
+                    "type": "string"
+                },
+                "author_user_agent": {
+                    "required": false,
+                    "description": "Клиентское приложение для автора объекта.",
+                    "type": "string"
+                },
+                "content": {
+                    "required": false,
+                    "description": "Содержимое объекта.",
+                    "type": "object"
+                },
+                "date": {
+                    "required": false,
+                    "description": "Дата публикации объекта, по временной зоне сайта.",
+                    "type": "string"
+                },
+                "date_gmt": {
+                    "required": false,
+                    "description": "Время публикации объекта, по GMT.",
+                    "type": "string"
+                },
+                "parent": {
+                    "required": false,
+                    "default": 0,
+                    "description": "ID родителя объекта.",
+                    "type": "integer"
+                },
+                "post": {
+                    "required": false,
+                    "default": 0,
+                    "description": "ID ассоциированного объекта записи.",
+                    "type": "integer"
+                },
+                "status": {
+                    "required": false,
+                    "description": "Состояние объекта.",
+                    "type": "string"
+                },
+                "meta": {
+                    "required": false,
+                    "description": "Мета поля.",
+                    "type": "object"
+                }
+            }
+        }
+    ],
+    "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "comment",
+        "type": "object",
+        "properties": {
+            "id": {
+                "description": "Уникальный идентификатор для объекта.",
+                "type": "integer",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "readonly": true
+            },
+            "author": {
+                "description": "ID объекта пользователя, если автор - пользователь.",
+                "type": "integer",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ]
+            },
+            "author_email": {
+                "description": "Адрес e-mail автора объекта.",
+                "type": "string",
+                "format": "email",
+                "context": [
+                    "edit"
+                ]
+            },
+            "author_ip": {
+                "description": "IP адрес автора объекта.",
+                "type": "string",
+                "format": "ip",
+                "context": [
+                    "edit"
+                ]
+            },
+            "author_name": {
+                "description": "Отображаемое имя для автора объекта.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ]
+            },
+            "author_url": {
+                "description": "URL для автора объекта.",
+                "type": "string",
+                "format": "uri",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ]
+            },
+            "author_user_agent": {
+                "description": "Клиентское приложение для автора объекта.",
+                "type": "string",
+                "context": [
+                    "edit"
+                ]
+            },
+            "content": {
+                "description": "Содержимое объекта.",
+                "type": "object",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "properties": {
+                    "raw": {
+                        "description": "Содержимое объекта как оно существует в базе данных.",
+                        "type": "string",
+                        "context": [
+                            "edit"
+                        ]
+                    },
+                    "rendered": {
+                        "description": "HTML содержимое объекта преобразованное для показа.",
+                        "type": "string",
+                        "context": [
+                            "view",
+                            "edit",
+                            "embed"
+                        ],
+                        "readonly": true
+                    }
+                }
+            },
+            "date": {
+                "description": "Дата публикации объекта, по временной зоне сайта.",
+                "type": "string",
+                "format": "date-time",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ]
+            },
+            "date_gmt": {
+                "description": "Время публикации объекта, по GMT.",
+                "type": "string",
+                "format": "date-time",
+                "context": [
+                    "view",
+                    "edit"
+                ]
+            },
+            "link": {
+                "description": "URL объекта.",
+                "type": "string",
+                "format": "uri",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "readonly": true
+            },
+            "parent": {
+                "description": "ID родителя объекта.",
+                "type": "integer",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "default": 0
+            },
+            "post": {
+                "description": "ID ассоциированного объекта записи.",
+                "type": "integer",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "default": 0
+            },
+            "status": {
+                "description": "Состояние объекта.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit"
+                ]
+            },
+            "type": {
+                "description": "Тип комментария для объекта.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "readonly": true
+            },
+            "author_avatar_urls": {
+                "description": "URL аватары автора объекта.",
+                "type": "object",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "readonly": true,
+                "properties": {
+                    "24": {
+                        "description": "URL аватары с размером изображения в 24 пикселей.",
+                        "type": "string",
+                        "format": "uri",
+                        "context": [
+                            "embed",
+                            "view",
+                            "edit"
+                        ]
+                    },
+                    "48": {
+                        "description": "URL аватары с размером изображения в 48 пикселей.",
+                        "type": "string",
+                        "format": "uri",
+                        "context": [
+                            "embed",
+                            "view",
+                            "edit"
+                        ]
+                    },
+                    "96": {
+                        "description": "URL аватары с размером изображения в 96 пикселей.",
+                        "type": "string",
+                        "format": "uri",
+                        "context": [
+                            "embed",
+                            "view",
+                            "edit"
+                        ]
+                    }
+                }
+            },
+            "meta": {
+                "description": "Мета поля.",
+                "type": "object",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "properties": []
+            }
+        }
+    },
+    "_links": {
+        "self": "http://wp-test.ru/wp-json/wp/v2/comments"
+    }
+}
