@@ -1,0 +1,177 @@
+{
+    "namespace": "wp/v2",
+    "methods": [
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE"
+    ],
+    "endpoints": [
+        {
+            "methods": [
+                "GET"
+            ],
+            "args": {
+                "id": {
+                    "required": false,
+                    "description": "Уникальный идентификатор элемента.",
+                    "type": "integer"
+                },
+                "context": {
+                    "required": false,
+                    "default": "view",
+                    "enum": [
+                        "view",
+                        "embed",
+                        "edit"
+                    ],
+                    "description": "Рамки в которых сделан запрос, определяют поля в ответе.",
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "methods": [
+                "POST",
+                "PUT",
+                "PATCH"
+            ],
+            "args": {
+                "id": {
+                    "required": false,
+                    "description": "Уникальный идентификатор элемента.",
+                    "type": "integer"
+                },
+                "description": {
+                    "required": false,
+                    "description": "HTML описание элемента.",
+                    "type": "string"
+                },
+                "name": {
+                    "required": false,
+                    "description": "HTML название элемента.",
+                    "type": "string"
+                },
+                "slug": {
+                    "required": false,
+                    "description": "Буквенно-цифровой идентификатор элемента уникальный для его типа.",
+                    "type": "string"
+                },
+                "meta": {
+                    "required": false,
+                    "description": "Мета поля.",
+                    "type": "object"
+                }
+            }
+        },
+        {
+            "methods": [
+                "DELETE"
+            ],
+            "args": {
+                "id": {
+                    "required": false,
+                    "description": "Уникальный идентификатор элемента.",
+                    "type": "integer"
+                },
+                "force": {
+                    "required": false,
+                    "default": false,
+                    "description": "Должно быть истинно, так как элементы не поддерживают перемещение в корзину.",
+                    "type": "boolean"
+                }
+            }
+        }
+    ],
+    "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "tag",
+        "type": "object",
+        "properties": {
+            "id": {
+                "description": "Уникальный идентификатор элемента.",
+                "type": "integer",
+                "context": [
+                    "view",
+                    "embed",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "count": {
+                "description": "Число опубликованных записей элемента.",
+                "type": "integer",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "description": {
+                "description": "HTML описание элемента.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit"
+                ]
+            },
+            "link": {
+                "description": "URL элемента.",
+                "type": "string",
+                "format": "uri",
+                "context": [
+                    "view",
+                    "embed",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "name": {
+                "description": "HTML название элемента.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "embed",
+                    "edit"
+                ],
+                "required": true
+            },
+            "slug": {
+                "description": "Буквенно-цифровой идентификатор элемента уникальный для его типа.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "embed",
+                    "edit"
+                ]
+            },
+            "taxonomy": {
+                "description": "Тип атрибуции элемента.",
+                "type": "string",
+                "enum": [
+                    "category",
+                    "post_tag",
+                    "nav_menu",
+                    "link_category",
+                    "post_format"
+                ],
+                "context": [
+                    "view",
+                    "embed",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "meta": {
+                "description": "Мета поля.",
+                "type": "object",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "properties": []
+            }
+        }
+    }
+}
