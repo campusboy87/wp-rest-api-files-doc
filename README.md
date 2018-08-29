@@ -1,1 +1,1 @@
-# wp-rest-api-files-doc
+# WP REST API info
