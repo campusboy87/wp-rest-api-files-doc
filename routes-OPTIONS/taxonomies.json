@@ -17,12 +17,12 @@
                         "embed",
                         "edit"
                     ],
-                    "description": "Scope under which the request is made; determines fields present in response.",
+                    "description": "Рамки в которых сделан запрос, определяют поля в ответе.",
                     "type": "string"
                 },
                 "type": {
                     "required": false,
-                    "description": "Limit results to taxonomies associated with a specific post type.",
+                    "description": "Ограничить выборку таксономиями ассоциированными с определенным типом записи.",
                     "type": "string"
                 }
             }
@@ -34,7 +34,7 @@
         "type": "object",
         "properties": {
             "capabilities": {
-                "description": "All capabilities used by the taxonomy.",
+                "description": "Все возможности используемые таксономией.",
                 "type": "object",
                 "context": [
                     "edit"
@@ -42,7 +42,7 @@
                 "readonly": true
             },
             "description": {
-                "description": "A human-readable description of the taxonomy.",
+                "description": "Человекочитаемое описание таксономии.",
                 "type": "string",
                 "context": [
                     "view",
@@ -51,7 +51,7 @@
                 "readonly": true
             },
             "hierarchical": {
-                "description": "Whether or not the taxonomy should have children.",
+                "description": "Может ли таксономия быть родительской.",
                 "type": "boolean",
                 "context": [
                     "view",
@@ -60,7 +60,7 @@
                 "readonly": true
             },
             "labels": {
-                "description": "Human-readable labels for the taxonomy for various contexts.",
+                "description": "Человекочитаемые метки таксономии для различных контекстов.",
                 "type": "object",
                 "context": [
                     "edit"
@@ -68,7 +68,7 @@
                 "readonly": true
             },
             "name": {
-                "description": "The title for the taxonomy.",
+                "description": "Название таксономии.",
                 "type": "string",
                 "context": [
                     "view",
@@ -78,7 +78,7 @@
                 "readonly": true
             },
             "slug": {
-                "description": "An alphanumeric identifier for the taxonomy.",
+                "description": "Буквенно-цифровой идентификатор таксономии.",
                 "type": "string",
                 "context": [
                     "view",
@@ -88,7 +88,7 @@
                 "readonly": true
             },
             "show_cloud": {
-                "description": "Whether or not the term cloud should be displayed.",
+                "description": "Должно ли быть показано облако элементов.",
                 "type": "boolean",
                 "context": [
                     "edit"
@@ -96,7 +96,7 @@
                 "readonly": true
             },
             "types": {
-                "description": "Types associated with the taxonomy.",
+                "description": "Типы ассоциированные с таксономией.",
                 "type": "array",
                 "items": {
                     "type": "string"
@@ -108,7 +108,7 @@
                 "readonly": true
             },
             "rest_base": {
-                "description": "REST base route for the taxonomy.",
+                "description": "базовый путь REST для таксономии.",
                 "type": "string",
                 "context": [
                     "view",
@@ -116,44 +116,10 @@
                     "embed"
                 ],
                 "readonly": true
-            },
-            "visibility": {
-                "description": "The visibility settings for the taxomonmy.",
-                "type": "object",
-                "context": [
-                    "edit"
-                ],
-                "readonly": true,
-                "properties": {
-                    "public": {
-                        "description": "Whether a taxonomy is intended for use publicly either via the admin interface or by front-end users.",
-                        "type": "boolean"
-                    },
-                    "publicly_queryable": {
-                        "description": "Whether the taxonomy is publicly queryable.",
-                        "type": "boolean"
-                    },
-                    "show_ui": {
-                        "description": "Whether to generate a default UI for managing this taxonomy.",
-                        "type": "boolean"
-                    },
-                    "show_admin_column": {
-                        "description": "Whether to allow automatic creation of taxonomy columns on associated post-types table.",
-                        "type": "boolean"
-                    },
-                    "show_in_nav_menus": {
-                        "description": "Whether to make the taxonomy available for selection in navigation menus.",
-                        "type": "boolean"
-                    },
-                    "show_in_quick_edit": {
-                        "description": "Whether to show the taxonomy in the quick/bulk edit panel.",
-                        "type": "boolean"
-                    }
-                }
             }
         }
     },
     "_links": {
-        "self": "https://demo.wp-api.org/wp-json/wp/v2/taxonomies"
+        "self": "http://wp-test.ru/wp-json/wp/v2/taxonomies"
     }
 }
