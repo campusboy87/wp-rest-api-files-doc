@@ -1,0 +1,122 @@
+{
+    "namespace": "wp/v2",
+    "methods": [
+        "GET"
+    ],
+    "endpoints": [
+        {
+            "methods": [
+                "GET"
+            ],
+            "args": {
+                "taxonomy": {
+                    "required": false,
+                    "description": "Буквенно-цифровой идентификатор таксономии.",
+                    "type": "string"
+                },
+                "context": {
+                    "required": false,
+                    "default": "view",
+                    "enum": [
+                        "view",
+                        "embed",
+                        "edit"
+                    ],
+                    "description": "Рамки в которых сделан запрос, определяют поля в ответе.",
+                    "type": "string"
+                }
+            }
+        }
+    ],
+    "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "taxonomy",
+        "type": "object",
+        "properties": {
+            "capabilities": {
+                "description": "Все возможности используемые таксономией.",
+                "type": "object",
+                "context": [
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "description": {
+                "description": "Человекочитаемое описание таксономии.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "hierarchical": {
+                "description": "Может ли таксономия быть родительской.",
+                "type": "boolean",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "labels": {
+                "description": "Человекочитаемые метки таксономии для различных контекстов.",
+                "type": "object",
+                "context": [
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "name": {
+                "description": "Название таксономии.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "readonly": true
+            },
+            "slug": {
+                "description": "Буквенно-цифровой идентификатор таксономии.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "readonly": true
+            },
+            "show_cloud": {
+                "description": "Должно ли быть показано облако элементов.",
+                "type": "boolean",
+                "context": [
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "types": {
+                "description": "Типы ассоциированные с таксономией.",
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "rest_base": {
+                "description": "базовый путь REST для таксономии.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "readonly": true
+            }
+        }
+    }
+}
