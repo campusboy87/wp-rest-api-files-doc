@@ -1,0 +1,130 @@
+{
+    "namespace": "wp/v2",
+    "methods": [
+        "GET"
+    ],
+    "endpoints": [
+        {
+            "methods": [
+                "GET"
+            ],
+            "args": {
+                "type": {
+                    "required": false,
+                    "description": "Буквенно-цифровой идентификатор типа записи.",
+                    "type": "string"
+                },
+                "context": {
+                    "required": false,
+                    "default": "view",
+                    "enum": [
+                        "view",
+                        "embed",
+                        "edit"
+                    ],
+                    "description": "Рамки в которых сделан запрос, определяют поля в ответе.",
+                    "type": "string"
+                }
+            }
+        }
+    ],
+    "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "type",
+        "type": "object",
+        "properties": {
+            "capabilities": {
+                "description": "Все возможности используемые типом записи.",
+                "type": "object",
+                "context": [
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "description": {
+                "description": "Человекочитаемое описание типа записи.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "hierarchical": {
+                "description": "Может ли этот тип записи быть родительским.",
+                "type": "boolean",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "viewable": {
+                "description": "Может ли тип записи быть доступным для просмотра.",
+                "type": "boolean",
+                "context": [
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "labels": {
+                "description": "Человекочитабельные метки для типа записи для различных контекстов.",
+                "type": "object",
+                "context": [
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "name": {
+                "description": "Название для типа записи.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "readonly": true
+            },
+            "slug": {
+                "description": "Буквенно-цифровой идентификатор типа записи.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "readonly": true
+            },
+            "supports": {
+                "description": "Все возможности поддерживаемые типом записи.",
+                "type": "object",
+                "context": [
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "taxonomies": {
+                "description": "Таксономии ассоциированные с типом записи.",
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "rest_base": {
+                "description": "базовый путь REST для типа записи.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "readonly": true
+            }
+        }
+    }
+}
