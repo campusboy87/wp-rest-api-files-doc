@@ -1,0 +1,354 @@
+{
+    "namespace": "wp/v2",
+    "methods": [
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE"
+    ],
+    "endpoints": [
+        {
+            "methods": [
+                "GET"
+            ],
+            "args": {
+                "id": {
+                    "required": false,
+                    "description": "Уникальный идентификатор пользователя.",
+                    "type": "integer"
+                },
+                "context": {
+                    "required": false,
+                    "default": "view",
+                    "enum": [
+                        "view",
+                        "embed",
+                        "edit"
+                    ],
+                    "description": "Рамки в которых сделан запрос, определяют поля в ответе.",
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "methods": [
+                "POST",
+                "PUT",
+                "PATCH"
+            ],
+            "args": {
+                "id": {
+                    "required": false,
+                    "description": "Уникальный идентификатор пользователя.",
+                    "type": "integer"
+                },
+                "username": {
+                    "required": false,
+                    "description": "Имя входа для пользователя.",
+                    "type": "string"
+                },
+                "name": {
+                    "required": false,
+                    "description": "Отображаемое имя пользователя.",
+                    "type": "string"
+                },
+                "first_name": {
+                    "required": false,
+                    "description": "Имя пользователя.",
+                    "type": "string"
+                },
+                "last_name": {
+                    "required": false,
+                    "description": "Фамилия пользователя.",
+                    "type": "string"
+                },
+                "email": {
+                    "required": false,
+                    "description": "Адрес e-mail пользователя.",
+                    "type": "string"
+                },
+                "url": {
+                    "required": false,
+                    "description": "URL пользователя.",
+                    "type": "string"
+                },
+                "description": {
+                    "required": false,
+                    "description": "Описание пользователя.",
+                    "type": "string"
+                },
+                "locale": {
+                    "required": false,
+                    "enum": [
+                        "",
+                        "en_US",
+                        "ru_RU",
+                        "uk"
+                    ],
+                    "description": "Локаль для пользователя.",
+                    "type": "string"
+                },
+                "nickname": {
+                    "required": false,
+                    "description": "Ник пользователя.",
+                    "type": "string"
+                },
+                "slug": {
+                    "required": false,
+                    "description": "Буквенно-цифровой идентификатор пользователя.",
+                    "type": "string"
+                },
+                "roles": {
+                    "required": false,
+                    "description": "Роли назначенные пользователю.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "password": {
+                    "required": false,
+                    "description": "Пароль пользователя (никогда не показывается).",
+                    "type": "string"
+                },
+                "meta": {
+                    "required": false,
+                    "description": "Мета поля.",
+                    "type": "object"
+                }
+            }
+        },
+        {
+            "methods": [
+                "DELETE"
+            ],
+            "args": {
+                "id": {
+                    "required": false,
+                    "description": "Уникальный идентификатор пользователя.",
+                    "type": "integer"
+                },
+                "force": {
+                    "required": false,
+                    "default": false,
+                    "description": "Должно быть истинным, так как пользователей нельзя переместить в корзину.",
+                    "type": "boolean"
+                },
+                "reassign": {
+                    "required": true,
+                    "description": "Переназначить удаленные записи пользователя и ссылки на этот ID пользователя.",
+                    "type": "integer"
+                }
+            }
+        }
+    ],
+    "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "user",
+        "type": "object",
+        "properties": {
+            "id": {
+                "description": "Уникальный идентификатор пользователя.",
+                "type": "integer",
+                "context": [
+                    "embed",
+                    "view",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "username": {
+                "description": "Имя входа для пользователя.",
+                "type": "string",
+                "context": [
+                    "edit"
+                ],
+                "required": true
+            },
+            "name": {
+                "description": "Отображаемое имя пользователя.",
+                "type": "string",
+                "context": [
+                    "embed",
+                    "view",
+                    "edit"
+                ]
+            },
+            "first_name": {
+                "description": "Имя пользователя.",
+                "type": "string",
+                "context": [
+                    "edit"
+                ]
+            },
+            "last_name": {
+                "description": "Фамилия пользователя.",
+                "type": "string",
+                "context": [
+                    "edit"
+                ]
+            },
+            "email": {
+                "description": "Адрес e-mail пользователя.",
+                "type": "string",
+                "format": "email",
+                "context": [
+                    "edit"
+                ],
+                "required": true
+            },
+            "url": {
+                "description": "URL пользователя.",
+                "type": "string",
+                "format": "uri",
+                "context": [
+                    "embed",
+                    "view",
+                    "edit"
+                ]
+            },
+            "description": {
+                "description": "Описание пользователя.",
+                "type": "string",
+                "context": [
+                    "embed",
+                    "view",
+                    "edit"
+                ]
+            },
+            "link": {
+                "description": "URL автора для пользователя.",
+                "type": "string",
+                "format": "uri",
+                "context": [
+                    "embed",
+                    "view",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "locale": {
+                "description": "Локаль для пользователя.",
+                "type": "string",
+                "enum": [
+                    "",
+                    "en_US",
+                    "ru_RU",
+                    "uk"
+                ],
+                "context": [
+                    "edit"
+                ]
+            },
+            "nickname": {
+                "description": "Ник пользователя.",
+                "type": "string",
+                "context": [
+                    "edit"
+                ]
+            },
+            "slug": {
+                "description": "Буквенно-цифровой идентификатор пользователя.",
+                "type": "string",
+                "context": [
+                    "embed",
+                    "view",
+                    "edit"
+                ]
+            },
+            "registered_date": {
+                "description": "Дата регистрации пользователя.",
+                "type": "string",
+                "format": "date-time",
+                "context": [
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "roles": {
+                "description": "Роли назначенные пользователю.",
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "context": [
+                    "edit"
+                ]
+            },
+            "password": {
+                "description": "Пароль пользователя (никогда не показывается).",
+                "type": "string",
+                "context": [],
+                "required": true
+            },
+            "capabilities": {
+                "description": "Все возможности назначенные пользователю.",
+                "type": "object",
+                "context": [
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "extra_capabilities": {
+                "description": "Любые дополнительные возможности назначенные пользователю.",
+                "type": "object",
+                "context": [
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "avatar_urls": {
+                "description": "URL аватара пользователя.",
+                "type": "object",
+                "context": [
+                    "embed",
+                    "view",
+                    "edit"
+                ],
+                "readonly": true,
+                "properties": {
+                    "24": {
+                        "description": "URL аватары с размером изображения в 24 пикселей.",
+                        "type": "string",
+                        "format": "uri",
+                        "context": [
+                            "embed",
+                            "view",
+                            "edit"
+                        ]
+                    },
+                    "48": {
+                        "description": "URL аватары с размером изображения в 48 пикселей.",
+                        "type": "string",
+                        "format": "uri",
+                        "context": [
+                            "embed",
+                            "view",
+                            "edit"
+                        ]
+                    },
+                    "96": {
+                        "description": "URL аватары с размером изображения в 96 пикселей.",
+                        "type": "string",
+                        "format": "uri",
+                        "context": [
+                            "embed",
+                            "view",
+                            "edit"
+                        ]
+                    }
+                }
+            },
+            "meta": {
+                "description": "Мета поля.",
+                "type": "object",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "properties": []
+            }
+        }
+    }
+}
