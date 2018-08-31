@@ -1,0 +1,204 @@
+{
+    "namespace": "wp/v2",
+    "methods": [
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH"
+    ],
+    "endpoints": [
+        {
+            "methods": [
+                "GET"
+            ],
+            "args": []
+        },
+        {
+            "methods": [
+                "POST",
+                "PUT",
+                "PATCH"
+            ],
+            "args": {
+                "title": {
+                    "required": false,
+                    "description": "Название сайта.",
+                    "type": "string"
+                },
+                "description": {
+                    "required": false,
+                    "description": "Слоган сайта.",
+                    "type": "string"
+                },
+                "url": {
+                    "required": false,
+                    "description": "Адрес сайта (URL)",
+                    "type": "string"
+                },
+                "email": {
+                    "required": false,
+                    "description": "Этот адрес используется в целях администрирования. Например, для уведомления о новых пользователях.",
+                    "type": "string"
+                },
+                "timezone": {
+                    "required": false,
+                    "description": "Город в той же временной зоне что и у вас.",
+                    "type": "string"
+                },
+                "date_format": {
+                    "required": false,
+                    "description": "Общий формат даты.",
+                    "type": "string"
+                },
+                "time_format": {
+                    "required": false,
+                    "description": "Общий формат времени.",
+                    "type": "string"
+                },
+                "start_of_week": {
+                    "required": false,
+                    "description": "Первый день недели.",
+                    "type": "integer"
+                },
+                "language": {
+                    "required": false,
+                    "description": "Код локали WordPress.",
+                    "type": "string"
+                },
+                "use_smilies": {
+                    "required": false,
+                    "description": "Преобразовывать смайлики наподобие :-) и :-P в картинки при показе.",
+                    "type": "boolean"
+                },
+                "default_category": {
+                    "required": false,
+                    "description": "Рубрика для записей по умолчанию.",
+                    "type": "integer"
+                },
+                "default_post_format": {
+                    "required": false,
+                    "description": "Формат записей по умолчанию.",
+                    "type": "string"
+                },
+                "posts_per_page": {
+                    "required": false,
+                    "description": "Максимум страниц блога для показа.",
+                    "type": "integer"
+                },
+                "default_ping_status": {
+                    "required": false,
+                    "enum": [
+                        "open",
+                        "closed"
+                    ],
+                    "description": "Разрешить ссылки оповещения с других блогов (уведомления и обратные ссылки) на новые статьи.",
+                    "type": "string"
+                },
+                "default_comment_status": {
+                    "required": false,
+                    "enum": [
+                        "open",
+                        "closed"
+                    ],
+                    "description": "Разрешить отправку комментариев к новым статьям.",
+                    "type": "string"
+                }
+            }
+        }
+    ],
+    "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "settings",
+        "type": "object",
+        "properties": {
+            "title": {
+                "type": "string",
+                "description": "Название сайта.",
+                "default": null
+            },
+            "description": {
+                "type": "string",
+                "description": "Слоган сайта.",
+                "default": null
+            },
+            "url": {
+                "type": "string",
+                "description": "Адрес сайта (URL)",
+                "default": null,
+                "format": "uri"
+            },
+            "email": {
+                "type": "string",
+                "description": "Этот адрес используется в целях администрирования. Например, для уведомления о новых пользователях.",
+                "default": null,
+                "format": "email"
+            },
+            "timezone": {
+                "type": "string",
+                "description": "Город в той же временной зоне что и у вас.",
+                "default": null
+            },
+            "date_format": {
+                "type": "string",
+                "description": "Общий формат даты.",
+                "default": null
+            },
+            "time_format": {
+                "type": "string",
+                "description": "Общий формат времени.",
+                "default": null
+            },
+            "start_of_week": {
+                "type": "integer",
+                "description": "Первый день недели.",
+                "default": null
+            },
+            "language": {
+                "type": "string",
+                "description": "Код локали WordPress.",
+                "default": "en_US"
+            },
+            "use_smilies": {
+                "type": "boolean",
+                "description": "Преобразовывать смайлики наподобие :-) и :-P в картинки при показе.",
+                "default": true
+            },
+            "default_category": {
+                "type": "integer",
+                "description": "Рубрика для записей по умолчанию.",
+                "default": null
+            },
+            "default_post_format": {
+                "type": "string",
+                "description": "Формат записей по умолчанию.",
+                "default": null
+            },
+            "posts_per_page": {
+                "type": "integer",
+                "description": "Максимум страниц блога для показа.",
+                "default": 10
+            },
+            "default_ping_status": {
+                "type": "string",
+                "description": "Разрешить ссылки оповещения с других блогов (уведомления и обратные ссылки) на новые статьи.",
+                "default": null,
+                "enum": [
+                    "open",
+                    "closed"
+                ]
+            },
+            "default_comment_status": {
+                "type": "string",
+                "description": "Разрешить отправку комментариев к новым статьям.",
+                "default": null,
+                "enum": [
+                    "open",
+                    "closed"
+                ]
+            }
+        }
+    },
+    "_links": {
+        "self": "http://wptest.ru/wp-json/wp/v2/settings"
+    }
+}
