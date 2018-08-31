@@ -1,0 +1,270 @@
+{
+    "namespace": "wp/v2",
+    "methods": [
+        "GET",
+        "DELETE"
+    ],
+    "endpoints": [
+        {
+            "methods": [
+                "GET"
+            ],
+            "args": {
+                "parent": {
+                    "required": false,
+                    "description": "ID родителя объекта.",
+                    "type": "integer"
+                },
+                "id": {
+                    "required": false,
+                    "description": "Уникальный идентификатор для объекта.",
+                    "type": "integer"
+                },
+                "context": {
+                    "required": false,
+                    "default": "view",
+                    "enum": [
+                        "view",
+                        "embed",
+                        "edit"
+                    ],
+                    "description": "Рамки в которых сделан запрос, определяют поля в ответе.",
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "methods": [
+                "DELETE"
+            ],
+            "args": {
+                "parent": {
+                    "required": false,
+                    "description": "ID родителя объекта.",
+                    "type": "integer"
+                },
+                "id": {
+                    "required": false,
+                    "description": "Уникальный идентификатор для объекта.",
+                    "type": "integer"
+                },
+                "force": {
+                    "required": false,
+                    "default": false,
+                    "description": "Должно быть истинно, так как ревизии не поддерживают перемещение в корзину. ",
+                    "type": "boolean"
+                }
+            }
+        }
+    ],
+    "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "post-revision",
+        "type": "object",
+        "properties": {
+            "author": {
+                "description": "ID автора объекта.",
+                "type": "integer",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ]
+            },
+            "date": {
+                "description": "Дата публикации объекта, по временной зоне сайта.",
+                "type": "string",
+                "format": "date-time",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ]
+            },
+            "date_gmt": {
+                "description": "Время публикации объекта, по GMT.",
+                "type": "string",
+                "format": "date-time",
+                "context": [
+                    "view",
+                    "edit"
+                ]
+            },
+            "guid": {
+                "description": "Глобальный уникальный идентификатор для объекта.",
+                "type": "object",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "readonly": true,
+                "properties": {
+                    "raw": {
+                        "description": "GUID для объекта, как он существует в базе данных.",
+                        "type": "string",
+                        "context": [
+                            "edit"
+                        ],
+                        "readonly": true
+                    },
+                    "rendered": {
+                        "description": "GUID для объекта, преобразованный для показа.",
+                        "type": "string",
+                        "context": [
+                            "view",
+                            "edit"
+                        ],
+                        "readonly": true
+                    }
+                }
+            },
+            "id": {
+                "description": "Уникальный идентификатор для объекта.",
+                "type": "integer",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ]
+            },
+            "modified": {
+                "description": "Дата последнего изменения объекта, по временной зоне сайта.",
+                "type": "string",
+                "format": "date-time",
+                "context": [
+                    "view",
+                    "edit"
+                ]
+            },
+            "modified_gmt": {
+                "description": "Дата последнего изменения объекта, в GMT.",
+                "type": "string",
+                "format": "date-time",
+                "context": [
+                    "view",
+                    "edit"
+                ]
+            },
+            "parent": {
+                "description": "ID родителя объекта.",
+                "type": "integer",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ]
+            },
+            "slug": {
+                "description": "Буквенно-цифровой идентификатор для объекта уникальный для его типа.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ]
+            },
+            "title": {
+                "description": "Название для объекта.",
+                "type": "object",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "properties": {
+                    "raw": {
+                        "description": "Название объекта как оно существует в базе данных.",
+                        "type": "string",
+                        "context": [
+                            "edit"
+                        ]
+                    },
+                    "rendered": {
+                        "description": "HTML название объекта, преобразованное для показа.",
+                        "type": "string",
+                        "context": [
+                            "view",
+                            "edit",
+                            "embed"
+                        ],
+                        "readonly": true
+                    }
+                }
+            },
+            "content": {
+                "description": "Содержимое объекта.",
+                "type": "object",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "properties": {
+                    "raw": {
+                        "description": "Содержимое объекта как оно существует в базе данных.",
+                        "type": "string",
+                        "context": [
+                            "edit"
+                        ]
+                    },
+                    "rendered": {
+                        "description": "HTML содержимое объекта преобразованное для показа.",
+                        "type": "string",
+                        "context": [
+                            "view",
+                            "edit"
+                        ],
+                        "readonly": true
+                    },
+                    "protected": {
+                        "description": "Защищено ли содержимое паролем.",
+                        "type": "boolean",
+                        "context": [
+                            "view",
+                            "edit",
+                            "embed"
+                        ],
+                        "readonly": true
+                    }
+                }
+            },
+            "excerpt": {
+                "description": "Отрывок объекта.",
+                "type": "object",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "properties": {
+                    "raw": {
+                        "description": "Отрывок объекта как он существует в базе данных.",
+                        "type": "string",
+                        "context": [
+                            "edit"
+                        ]
+                    },
+                    "rendered": {
+                        "description": "HTML отрывок объекта, преобразованный для показа.",
+                        "type": "string",
+                        "context": [
+                            "view",
+                            "edit",
+                            "embed"
+                        ],
+                        "readonly": true
+                    },
+                    "protected": {
+                        "description": "Защищать ли паролем отрывок.",
+                        "type": "boolean",
+                        "context": [
+                            "view",
+                            "edit",
+                            "embed"
+                        ],
+                        "readonly": true
+                    }
+                }
+            }
+        }
+    }
+}
