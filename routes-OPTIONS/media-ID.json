@@ -1,0 +1,490 @@
+{
+    "namespace": "wp/v2",
+    "methods": [
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE"
+    ],
+    "endpoints": [
+        {
+            "methods": [
+                "GET"
+            ],
+            "args": {
+                "id": {
+                    "required": false,
+                    "description": "Уникальный идентификатор для объекта.",
+                    "type": "integer"
+                },
+                "context": {
+                    "required": false,
+                    "default": "view",
+                    "enum": [
+                        "view",
+                        "embed",
+                        "edit"
+                    ],
+                    "description": "Рамки в которых сделан запрос, определяют поля в ответе.",
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "methods": [
+                "POST",
+                "PUT",
+                "PATCH"
+            ],
+            "args": {
+                "id": {
+                    "required": false,
+                    "description": "Уникальный идентификатор для объекта.",
+                    "type": "integer"
+                },
+                "date": {
+                    "required": false,
+                    "description": "Дата публикации объекта, по временной зоне сайта.",
+                    "type": "string"
+                },
+                "date_gmt": {
+                    "required": false,
+                    "description": "Время публикации объекта, по GMT.",
+                    "type": "string"
+                },
+                "slug": {
+                    "required": false,
+                    "description": "Буквенно-цифровой идентификатор для объекта уникальный для его типа.",
+                    "type": "string"
+                },
+                "status": {
+                    "required": false,
+                    "enum": [
+                        "publish",
+                        "future",
+                        "draft",
+                        "pending",
+                        "private"
+                    ],
+                    "description": "Именованный статус для объекта.",
+                    "type": "string"
+                },
+                "title": {
+                    "required": false,
+                    "description": "Название для объекта.",
+                    "type": "object"
+                },
+                "author": {
+                    "required": false,
+                    "description": "ID автора объекта.",
+                    "type": "integer"
+                },
+                "comment_status": {
+                    "required": false,
+                    "enum": [
+                        "open",
+                        "closed"
+                    ],
+                    "description": "Открыты ли комментарии для объекта.",
+                    "type": "string"
+                },
+                "ping_status": {
+                    "required": false,
+                    "enum": [
+                        "open",
+                        "closed"
+                    ],
+                    "description": "Принимает ли объект уведомления.",
+                    "type": "string"
+                },
+                "meta": {
+                    "required": false,
+                    "description": "Мета поля.",
+                    "type": "object"
+                },
+                "template": {
+                    "required": false,
+                    "description": "Файл темы используемый для показа объекта.",
+                    "type": "string"
+                },
+                "alt_text": {
+                    "required": false,
+                    "description": "Альтернативный текст для показа когда вложение не отображается.",
+                    "type": "string"
+                },
+                "caption": {
+                    "required": false,
+                    "description": "Подпись вложения.",
+                    "type": "object"
+                },
+                "description": {
+                    "required": false,
+                    "description": "Описание вложения.",
+                    "type": "object"
+                },
+                "post": {
+                    "required": false,
+                    "description": "ID для ассоциированых записей для вложения.",
+                    "type": "integer"
+                }
+            }
+        },
+        {
+            "methods": [
+                "DELETE"
+            ],
+            "args": {
+                "id": {
+                    "required": false,
+                    "description": "Уникальный идентификатор для объекта.",
+                    "type": "integer"
+                },
+                "force": {
+                    "required": false,
+                    "default": false,
+                    "description": "Игнорировать ли перемещение в корзину и принудительно удалять.",
+                    "type": "boolean"
+                }
+            }
+        }
+    ],
+    "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "attachment",
+        "type": "object",
+        "properties": {
+            "date": {
+                "description": "Дата публикации объекта, по временной зоне сайта.",
+                "type": "string",
+                "format": "date-time",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ]
+            },
+            "date_gmt": {
+                "description": "Время публикации объекта, по GMT.",
+                "type": "string",
+                "format": "date-time",
+                "context": [
+                    "view",
+                    "edit"
+                ]
+            },
+            "guid": {
+                "description": "Глобальный уникальный идентификатор для объекта.",
+                "type": "object",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "readonly": true,
+                "properties": {
+                    "raw": {
+                        "description": "GUID для объекта, как он существует в базе данных.",
+                        "type": "string",
+                        "context": [
+                            "edit"
+                        ],
+                        "readonly": true
+                    },
+                    "rendered": {
+                        "description": "GUID для объекта, преобразованный для показа.",
+                        "type": "string",
+                        "context": [
+                            "view",
+                            "edit"
+                        ],
+                        "readonly": true
+                    }
+                }
+            },
+            "id": {
+                "description": "Уникальный идентификатор для объекта.",
+                "type": "integer",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "readonly": true
+            },
+            "link": {
+                "description": "URL объекта.",
+                "type": "string",
+                "format": "uri",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "readonly": true
+            },
+            "modified": {
+                "description": "Дата последнего изменения объекта, по временной зоне сайта.",
+                "type": "string",
+                "format": "date-time",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "modified_gmt": {
+                "description": "Дата последнего изменения объекта, в GMT.",
+                "type": "string",
+                "format": "date-time",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "slug": {
+                "description": "Буквенно-цифровой идентификатор для объекта уникальный для его типа.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ]
+            },
+            "status": {
+                "description": "Именованный статус для объекта.",
+                "type": "string",
+                "enum": [
+                    "publish",
+                    "future",
+                    "draft",
+                    "pending",
+                    "private"
+                ],
+                "context": [
+                    "view",
+                    "edit"
+                ]
+            },
+            "type": {
+                "description": "Тип записи для объекта.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "readonly": true
+            },
+            "title": {
+                "description": "Название для объекта.",
+                "type": "object",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "properties": {
+                    "raw": {
+                        "description": "Название объекта как оно существует в базе данных.",
+                        "type": "string",
+                        "context": [
+                            "edit"
+                        ]
+                    },
+                    "rendered": {
+                        "description": "HTML название объекта, преобразованное для показа.",
+                        "type": "string",
+                        "context": [
+                            "view",
+                            "edit",
+                            "embed"
+                        ],
+                        "readonly": true
+                    }
+                }
+            },
+            "author": {
+                "description": "ID автора объекта.",
+                "type": "integer",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ]
+            },
+            "comment_status": {
+                "description": "Открыты ли комментарии для объекта.",
+                "type": "string",
+                "enum": [
+                    "open",
+                    "closed"
+                ],
+                "context": [
+                    "view",
+                    "edit"
+                ]
+            },
+            "ping_status": {
+                "description": "Принимает ли объект уведомления.",
+                "type": "string",
+                "enum": [
+                    "open",
+                    "closed"
+                ],
+                "context": [
+                    "view",
+                    "edit"
+                ]
+            },
+            "meta": {
+                "description": "Мета поля.",
+                "type": "object",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "properties": []
+            },
+            "template": {
+                "description": "Файл темы используемый для показа объекта.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit"
+                ]
+            },
+            "alt_text": {
+                "description": "Альтернативный текст для показа когда вложение не отображается.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ]
+            },
+            "caption": {
+                "description": "Подпись вложения.",
+                "type": "object",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "properties": {
+                    "raw": {
+                        "description": "Подпись для вложения, как она существует в базе данных.",
+                        "type": "string",
+                        "context": [
+                            "edit"
+                        ]
+                    },
+                    "rendered": {
+                        "description": "HTML подпись для вложения, преобразованная для показа.",
+                        "type": "string",
+                        "context": [
+                            "view",
+                            "edit",
+                            "embed"
+                        ],
+                        "readonly": true
+                    }
+                }
+            },
+            "description": {
+                "description": "Описание вложения.",
+                "type": "object",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "properties": {
+                    "raw": {
+                        "description": "Описание для объекта как оно существует в базе данных.",
+                        "type": "string",
+                        "context": [
+                            "edit"
+                        ]
+                    },
+                    "rendered": {
+                        "description": "HTML описание для объекта преобразованное для показа.",
+                        "type": "string",
+                        "context": [
+                            "view",
+                            "edit"
+                        ],
+                        "readonly": true
+                    }
+                }
+            },
+            "media_type": {
+                "description": "Тип вложения.",
+                "type": "string",
+                "enum": [
+                    "image",
+                    "file"
+                ],
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "readonly": true
+            },
+            "mime_type": {
+                "description": "MIME тип вложения.",
+                "type": "string",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "readonly": true
+            },
+            "media_details": {
+                "description": "Подробности о медиа файле, специфичные его типу.",
+                "type": "object",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "readonly": true
+            },
+            "post": {
+                "description": "ID для ассоциированых записей для вложения.",
+                "type": "integer",
+                "context": [
+                    "view",
+                    "edit"
+                ]
+            },
+            "source_url": {
+                "description": "URL оригинала файла вложения.",
+                "type": "string",
+                "format": "uri",
+                "context": [
+                    "view",
+                    "edit",
+                    "embed"
+                ],
+                "readonly": true
+            }
+        },
+        "links": [
+            {
+                "rel": "https://api.w.org/action-assign-author",
+                "title": "Текущий пользователь может сменить автора для этой записи.",
+                "href": "http://wp-test.ru/wp-json/wp/v2/media/{id}",
+                "targetSchema": {
+                    "type": "object",
+                    "properties": {
+                        "author": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
