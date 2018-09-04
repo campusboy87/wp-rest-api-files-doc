@@ -1,12 +1,19 @@
+// Запускаем наш контроллер и регистрируем маршруты
+add_action( 'rest_api_init', 'prefix_register_my_rest_routes' );
+function prefix_register_my_rest_routes() {
+	$controller = new My_REST_Posts_Controller();
+	$controller->register_routes();
+}
+
 class My_REST_Posts_Controller {
 
-	## инициализация, во время которой указываем namespace и resource_name
+	## Инициализация, во время которой указываем namespace и resource_name
 	function __construct() {
 		$this->namespace     = '/my-namespace/v1';
 		$this->resource_name = 'posts';
 	}
 
-	## регистрация маршрутов
+	## Регистрация маршрутов
 	function register_routes() {
 
 		register_rest_route( $this->namespace, '/' . $this->resource_name, array(
@@ -168,11 +175,4 @@ class My_REST_Posts_Controller {
 		return is_user_logged_in() ? 403 : 401;
 	}
 
-}
-
-// Запускаем наш контроллер и регистрируем маршруты
-add_action( 'rest_api_init', 'prefix_register_my_rest_routes' );
-function prefix_register_my_rest_routes() {
-	$controller = new My_REST_Posts_Controller();
-	$controller->register_routes();
 }
