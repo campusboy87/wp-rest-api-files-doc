@@ -16,7 +16,7 @@ class My_REST_Posts_Controller extends WP_REST_Controller {
 	## Регистрация маршрутов
 	function register_routes() {
 
-		register_rest_route( $this->namespace, '/' . $this->resource_name, array(
+		register_rest_route( $this->namespace, "/$this->resource_name", array(
 			// конечная точка для чтения коллекции ресурсов
 			array(
 				'methods'   => 'GET',
