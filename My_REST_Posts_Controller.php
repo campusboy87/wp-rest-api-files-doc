@@ -9,7 +9,7 @@ class My_REST_Posts_Controller extends WP_REST_Controller {
 
 	## Инициализация, во время которой указываем namespace и resource_name
 	function __construct() {
-		$this->namespace     = '/my-namespace/v1';
+		$this->namespace     = 'my-namespace/v1';
 		$this->resource_name = 'posts';
 	}
 
