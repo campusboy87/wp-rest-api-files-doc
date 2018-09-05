@@ -41,9 +41,8 @@ class My_REST_Posts_Controller extends WP_REST_Controller {
 
 	## Проверяет доступ к чтению ресурсов.
 	function get_items_permissions_check( $request ) {
-		if ( ! current_user_can( 'read' ) ) {
-			return new WP_Error( 'rest_forbidden', 'Вы не можете просмотреть ресурс записи', array( 'status' => $this->error_status_code() ) );
-		}
+		if ( ! current_user_can( 'read' ) )
+			return new WP_Error( 'rest_forbidden', esc_html__( 'You cannot view the post resource.' ), array( 'status' => $this->error_status_code() ) );
 
 		return true;
 	}
@@ -56,30 +55,26 @@ class My_REST_Posts_Controller extends WP_REST_Controller {
 	 * @return WP_Error|WP_REST_Response
 	 */
 	function get_items( $request ) {
+		$data = array();
+
 		$posts = get_posts( array(
 			'post_per_page' => 5,
 		) );
 
-		$data = array();
-
-		if ( empty( $posts ) ) {
-			return rest_ensure_response( $data );
-		}
+		if ( empty( $posts ) )
+			return $data;
 
 		foreach ( $posts as $post ) {
 			$response = $this->prepare_item_for_response( $post, $request );
 			$data[] = $this->prepare_response_for_collection( $response );
 		}
 
-		return rest_ensure_response( $data );
+		return $data;
 	}
 
 	## Проверка права доступа.
 	function get_item_permissions_check( $request ) {
-		if ( ! current_user_can( 'read' ) )
-			return new WP_Error( 'rest_forbidden', esc_html__( 'You cannot view the post resource.' ), array( 'status' => $this->error_status_code() ) );
-
-		return true;
+		return $this->get_items_permissions_check();
 	}
 
 	/**
@@ -94,7 +89,7 @@ class My_REST_Posts_Controller extends WP_REST_Controller {
 		$post = get_post( $id );
 
 		if ( empty( $post ) )
-			return rest_ensure_response( array() );
+			return array();
 
 		return prepare_item_for_response( $post, $request );
 	}
@@ -119,7 +114,7 @@ class My_REST_Posts_Controller extends WP_REST_Controller {
 		if ( isset( $schema['properties']['content'] ) )
 			$post_data['content'] = apply_filters( 'the_content', $post->post_content, $post );
 
-		return rest_ensure_response( $post_data );
+		return $post_data;
 	}
 
 	## Подготавливает ответ отдельного ресурса для добавления его в коллекцию ресурсов.
