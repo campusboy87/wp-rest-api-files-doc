@@ -27,7 +27,7 @@ class My_REST_Posts_Controller extends WP_REST_Controller {
 			'schema' => array( $this, 'get_item_schema' ),
 		) );
 
-		register_rest_route( $this->namespace, '/' . $this->resource_name . '/(?P<id>[\d]+)', array(
+		register_rest_route( $this->namespace, "/$this->resource_name/(?P<id>[\d]+)", array(
 			// конечная точка для чтения отдельного ресурса
 			array(
 				'methods'   => 'GET',
