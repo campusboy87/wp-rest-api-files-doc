@@ -5,7 +5,7 @@ function prefix_register_my_rest_routes() {
 	$controller->register_routes();
 }
 
-class My_REST_Posts_Controller {
+class My_REST_Posts_Controller extends WP_REST_Controller {
 
 	## Инициализация, во время которой указываем namespace и resource_name
 	function __construct() {
