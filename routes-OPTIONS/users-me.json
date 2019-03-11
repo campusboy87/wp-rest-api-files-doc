@@ -1,0 +1,338 @@
+{
+    "namespace": "wp/v2",
+    "methods": [
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE"
+    ],
+    "endpoints": [
+        {
+            "methods": [
+                "GET"
+            ],
+            "args": {
+                "context": {
+                    "required": false,
+                    "default": "view",
+                    "enum": [
+                        "view",
+                        "embed",
+                        "edit"
+                    ],
+                    "description": "Scope under which the request is made; determines fields present in response.",
+                    "type": "string"
+                }
+            }
+        },
+        {
+            "methods": [
+                "POST",
+                "PUT",
+                "PATCH"
+            ],
+            "args": {
+                "username": {
+                    "required": false,
+                    "description": "Login name for the user.",
+                    "type": "string"
+                },
+                "name": {
+                    "required": false,
+                    "description": "Display name for the user.",
+                    "type": "string"
+                },
+                "first_name": {
+                    "required": false,
+                    "description": "First name for the user.",
+                    "type": "string"
+                },
+                "last_name": {
+                    "required": false,
+                    "description": "Last name for the user.",
+                    "type": "string"
+                },
+                "email": {
+                    "required": false,
+                    "description": "The email address for the user.",
+                    "type": "string"
+                },
+                "url": {
+                    "required": false,
+                    "description": "URL of the user.",
+                    "type": "string"
+                },
+                "description": {
+                    "required": false,
+                    "description": "Description of the user.",
+                    "type": "string"
+                },
+                "locale": {
+                    "required": false,
+                    "enum": [
+                        "",
+                        "en_US"
+                    ],
+                    "description": "Locale for the user.",
+                    "type": "string"
+                },
+                "nickname": {
+                    "required": false,
+                    "description": "The nickname for the user.",
+                    "type": "string"
+                },
+                "slug": {
+                    "required": false,
+                    "description": "An alphanumeric identifier for the user.",
+                    "type": "string"
+                },
+                "roles": {
+                    "required": false,
+                    "description": "Roles assigned to the user.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "password": {
+                    "required": false,
+                    "description": "Password for the user (never included).",
+                    "type": "string"
+                },
+                "meta": {
+                    "required": false,
+                    "description": "Meta fields.",
+                    "type": "object"
+                }
+            }
+        },
+        {
+            "methods": [
+                "DELETE"
+            ],
+            "args": {
+                "force": {
+                    "required": false,
+                    "default": false,
+                    "description": "Required to be true, as users do not support trashing.",
+                    "type": "boolean"
+                },
+                "reassign": {
+                    "required": true,
+                    "description": "Reassign the deleted user's posts and links to this user ID.",
+                    "type": "integer"
+                }
+            }
+        }
+    ],
+    "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "user",
+        "type": "object",
+        "properties": {
+            "id": {
+                "description": "Unique identifier for the user.",
+                "type": "integer",
+                "context": [
+                    "embed",
+                    "view",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "username": {
+                "description": "Login name for the user.",
+                "type": "string",
+                "context": [
+                    "edit"
+                ],
+                "required": true
+            },
+            "name": {
+                "description": "Display name for the user.",
+                "type": "string",
+                "context": [
+                    "embed",
+                    "view",
+                    "edit"
+                ]
+            },
+            "first_name": {
+                "description": "First name for the user.",
+                "type": "string",
+                "context": [
+                    "edit"
+                ]
+            },
+            "last_name": {
+                "description": "Last name for the user.",
+                "type": "string",
+                "context": [
+                    "edit"
+                ]
+            },
+            "email": {
+                "description": "The email address for the user.",
+                "type": "string",
+                "format": "email",
+                "context": [
+                    "edit"
+                ],
+                "required": true
+            },
+            "url": {
+                "description": "URL of the user.",
+                "type": "string",
+                "format": "uri",
+                "context": [
+                    "embed",
+                    "view",
+                    "edit"
+                ]
+            },
+            "description": {
+                "description": "Description of the user.",
+                "type": "string",
+                "context": [
+                    "embed",
+                    "view",
+                    "edit"
+                ]
+            },
+            "link": {
+                "description": "Author URL of the user.",
+                "type": "string",
+                "format": "uri",
+                "context": [
+                    "embed",
+                    "view",
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "locale": {
+                "description": "Locale for the user.",
+                "type": "string",
+                "enum": [
+                    "",
+                    "en_US"
+                ],
+                "context": [
+                    "edit"
+                ]
+            },
+            "nickname": {
+                "description": "The nickname for the user.",
+                "type": "string",
+                "context": [
+                    "edit"
+                ]
+            },
+            "slug": {
+                "description": "An alphanumeric identifier for the user.",
+                "type": "string",
+                "context": [
+                    "embed",
+                    "view",
+                    "edit"
+                ]
+            },
+            "registered_date": {
+                "description": "Registration date for the user.",
+                "type": "string",
+                "format": "date-time",
+                "context": [
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "roles": {
+                "description": "Roles assigned to the user.",
+                "type": "array",
+                "items": {
+                    "type": "string"
+                },
+                "context": [
+                    "edit"
+                ]
+            },
+            "password": {
+                "description": "Password for the user (never included).",
+                "type": "string",
+                "context": [],
+                "required": true
+            },
+            "capabilities": {
+                "description": "All capabilities assigned to the user.",
+                "type": "object",
+                "context": [
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "extra_capabilities": {
+                "description": "Any extra capabilities assigned to the user.",
+                "type": "object",
+                "context": [
+                    "edit"
+                ],
+                "readonly": true
+            },
+            "avatar_urls": {
+                "description": "Avatar URLs for the user.",
+                "type": "object",
+                "context": [
+                    "embed",
+                    "view",
+                    "edit"
+                ],
+                "readonly": true,
+                "properties": {
+                    "24": {
+                        "description": "Avatar URL with image size of 24 pixels.",
+                        "type": "string",
+                        "format": "uri",
+                        "context": [
+                            "embed",
+                            "view",
+                            "edit"
+                        ]
+                    },
+                    "48": {
+                        "description": "Avatar URL with image size of 48 pixels.",
+                        "type": "string",
+                        "format": "uri",
+                        "context": [
+                            "embed",
+                            "view",
+                            "edit"
+                        ]
+                    },
+                    "96": {
+                        "description": "Avatar URL with image size of 96 pixels.",
+                        "type": "string",
+                        "format": "uri",
+                        "context": [
+                            "embed",
+                            "view",
+                            "edit"
+                        ]
+                    }
+                }
+            },
+            "meta": {
+                "description": "Meta fields.",
+                "type": "object",
+                "context": [
+                    "view",
+                    "edit"
+                ],
+                "properties": []
+            }
+        }
+    },
+    "_links": {
+        "self": "https://demo.wp-api.org/wp-json/wp/v2/users/me"
+    }
+}
