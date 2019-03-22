@@ -74,7 +74,7 @@ class My_REST_Posts_Controller extends WP_REST_Controller {
 
 	## Проверка права доступа.
 	function get_item_permissions_check( $request ) {
-		return $this->get_items_permissions_check();
+		return $this->get_items_permissions_check( $request );
 	}
 
 	/**
