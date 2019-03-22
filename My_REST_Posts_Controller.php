@@ -7,42 +7,35 @@ function prefix_register_my_rest_routes() {
 
 class My_REST_Posts_Controller extends WP_REST_Controller {
 
-	## Инициализация, во время которой указываем namespace и resource_name
-	function __construct() {
+	function __construct(){
 		$this->namespace     = 'my-namespace/v1';
 		$this->resource_name = 'posts';
 	}
 
-	## Регистрация маршрутов
-	function register_routes() {
+	function register_routes(){
 
-		register_rest_route( $this->namespace, "/$this->resource_name", array(
-			// конечная точка для чтения коллекции ресурсов
-			array(
-				'methods'   => 'GET',
-				'callback'  => array( $this, 'get_items' ),
-				'permission_callback' => array( $this, 'get_items_permissions_check' ),
-			),
-			// схема ресурса
-			'schema' => array( $this, 'get_item_schema' ),
-		) );
+		register_rest_route( $this->namespace, "/$this->resource_name", [
+			[
+				'methods'             => 'GET',
+				'callback'            => [ $this, 'get_items' ],
+				'permission_callback' => [ $this, 'get_items_permissions_check' ],
+			],
+			'schema' => [ $this, 'get_item_schema' ],
+		] );
 
-		register_rest_route( $this->namespace, "/$this->resource_name/(?P<id>[\d]+)", array(
-			// конечная точка для чтения отдельного ресурса
-			array(
+		register_rest_route( $this->namespace, "/$this->resource_name/(?P<id>[\w]+)", [
+			[
 				'methods'   => 'GET',
-				'callback'  => array( $this, 'get_item' ),
-				'permission_callback' => array( $this, 'get_item_permissions_check' ),
-			),
-			// схема ресурса
-			'schema' => array( $this, 'get_item_schema' ),
-		) );
+				'callback'  => [ $this, 'get_item' ],
+				'permission_callback' => [ $this, 'get_item_permissions_check' ],
+			],
+			'schema' => [ $this, 'get_item_schema' ],
+		] );
 	}
 
-	## Проверяет доступ к чтению ресурсов.
-	function get_items_permissions_check( $request ) {
+	function get_items_permissions_check( $request ){
 		if ( ! current_user_can( 'read' ) )
-			return new WP_Error( 'rest_forbidden', esc_html__( 'You cannot view the post resource.' ), array( 'status' => $this->error_status_code() ) );
+			return new WP_Error( 'rest_forbidden', esc_html__( 'You cannot view the post resource.' ), [ 'status' => $this->error_status_code() ] );
 
 		return true;
 	}
@@ -52,19 +45,19 @@ class My_REST_Posts_Controller extends WP_REST_Controller {
 	 *
 	 * @param WP_REST_Request $request Текущий запрос.
 	 *
-	 * @return WP_Error|WP_REST_Response
+	 * @return WP_Error|array
 	 */
-	function get_items( $request ) {
-		$data = array();
+	function get_items( $request ){
+		$data = [];
 
-		$posts = get_posts( array(
+		$posts = get_posts( [
 			'post_per_page' => 5,
-		) );
+		] );
 
 		if ( empty( $posts ) )
 			return $data;
 
-		foreach ( $posts as $post ) {
+		foreach( $posts as $post ){
 			$response = $this->prepare_item_for_response( $post, $request );
 			$data[] = $this->prepare_response_for_collection( $response );
 		}
@@ -73,7 +66,7 @@ class My_REST_Posts_Controller extends WP_REST_Controller {
 	}
 
 	## Проверка права доступа.
-	function get_item_permissions_check( $request ) {
+	function get_item_permissions_check( $request ){
 		return $this->get_items_permissions_check( $request );
 	}
 
@@ -82,16 +75,16 @@ class My_REST_Posts_Controller extends WP_REST_Controller {
 	 *
 	 * @param WP_REST_Request $request Текущий запрос.
 	 *
-	 * @return WP_Error|WP_REST_Response
+	 * @return array
 	 */
-	function get_item( $request ) {
+	function get_item( $request ){
 		$id = (int) $request['id'];
 		$post = get_post( $id );
 
-		if ( empty( $post ) )
+		if( ! $post )
 			return array();
 
-		return prepare_item_for_response( $post, $request );
+		return $this->prepare_item_for_response( $post, $request );
 	}
 
 	/**
@@ -100,10 +93,11 @@ class My_REST_Posts_Controller extends WP_REST_Controller {
 	 * @param WP_Post         $post    Объект ресурса, из которого будут взяты оригинальные данные.
 	 * @param WP_REST_Request $request Текущий запрос.
 	 *
-	 * @return WP_Error|WP_REST_Response
+	 * @return array
 	 */
-	function prepare_item_for_response( $post, $request ) {
-		$post_data = array();
+	function prepare_item_for_response( $post, $request ){
+
+		$post_data = [];
 
 		$schema = $this->get_item_schema();
 
@@ -117,22 +111,30 @@ class My_REST_Posts_Controller extends WP_REST_Controller {
 		return $post_data;
 	}
 
-	## Подготавливает ответ отдельного ресурса для добавления его в коллекцию ресурсов.
-	function prepare_response_for_collection( $response ) {
-		if ( ! ( $response instanceof WP_REST_Response ) ) {
+	/**
+	 * Подготавливает ответ отдельного ресурса для добавления его в коллекцию ресурсов.
+	 *
+	 * @param WP_REST_Response $response Response object.
+	 *                                   
+	 * @return array|mixed Response data, ready for insertion into collection data.
+	 */
+	function prepare_response_for_collection( $response ){
+
+		if ( ! ( $response instanceof WP_REST_Response ) ){
 			return $response;
 		}
 
 		$data = (array) $response->get_data();
 		$server = rest_get_server();
 
-		if ( method_exists( $server, 'get_compact_response_links' ) ) {
-			$links = call_user_func( array( $server, 'get_compact_response_links' ), $response );
-		} else {
-			$links = call_user_func( array( $server, 'get_response_links' ), $response );
+		if ( method_exists( $server, 'get_compact_response_links' ) ){
+			$links = call_user_func( [ $server, 'get_compact_response_links' ], $response );
+		}
+		else {
+			$links = call_user_func( [ $server, 'get_response_links' ], $response );
 		}
 
-		if ( ! empty( $links ) ) {
+		if ( ! empty( $links ) ){
 			$data['_links'] = $links;
 		}
 
@@ -140,33 +142,35 @@ class My_REST_Posts_Controller extends WP_REST_Controller {
 	}
 
 	## Схема ресурса.
-	function get_item_schema() {
-		$schema = array(
-			// // показывает какую версию схемы мы используем - это draft 4
-			'$schema'              => 'http://json-schema.org/draft-04/schema#',
+	function get_item_schema(){
+		$schema = [
+			// показывает какую версию схемы мы используем - это draft 4
+			'$schema'    => 'http://json-schema.org/draft-04/schema#',
 			// определяет ресурс который описывает схема
-			'title'                => 'post',
-			'type'                 => 'object',
+			'title'      => 'vehicle',
+			'type'       => 'object',
 			// в JSON схеме нужно указывать свойства в атрибуете 'properties'.
-			'properties'           => array(
-				'id' => array(
-					'description'  => esc_html__( 'Unique identifier for the object.', 'my-textdomain' ),
-					'type'         => 'integer',
-					'context'      => array( 'view', 'edit', 'embed' ),
-					'readonly'     => true,
-				),
-				'content' => array(
-					'description'  => esc_html__( 'The content for the object.', 'my-textdomain' ),
-					'type'         => 'string',
-				),
-			),
-		);
+			'properties' => [
+				'id' => [
+					'description' => 'Unique identifier for the object.',
+					'type'        => 'integer',
+					'context'     => [ 'view', 'edit', 'embed' ],
+					'readonly'    => true,
+				],
+				'vin' => [
+					'description' => 'VIN code of vehicle.',
+					'type'        => 'string',
+				],
+				// TODO добавить поля
+				// []
+			],
+		];
 
 		return $schema;
 	}
 
 	## Устанавливает HTTP статус код для авторизации.
-	function error_status_code() {
+	function error_status_code(){
 		return is_user_logged_in() ? 403 : 401;
 	}
 
