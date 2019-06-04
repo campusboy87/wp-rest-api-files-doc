@@ -8,13 +8,13 @@ function prefix_register_my_rest_routes() {
 class My_REST_Posts_Controller extends WP_REST_Controller {
 
 	function __construct(){
-		$this->namespace     = 'my-namespace/v1';
-		$this->resource_name = 'posts';
+		$this->namespace = 'my-namespace/v1';
+		$this->rest_base = 'posts';
 	}
 
 	function register_routes(){
 
-		register_rest_route( $this->namespace, "/$this->resource_name", [
+		register_rest_route( $this->namespace, "/$this->rest_base", [
 			[
 				'methods'             => 'GET',
 				'callback'            => [ $this, 'get_items' ],
@@ -23,7 +23,7 @@ class My_REST_Posts_Controller extends WP_REST_Controller {
 			'schema' => [ $this, 'get_item_schema' ],
 		] );
 
-		register_rest_route( $this->namespace, "/$this->resource_name/(?P<id>[\w]+)", [
+		register_rest_route( $this->namespace, "/$this->rest_base/(?P<id>[\w]+)", [
 			[
 				'methods'   => 'GET',
 				'callback'  => [ $this, 'get_item' ],
