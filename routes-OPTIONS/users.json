@@ -11,69 +11,72 @@
             ],
             "args": {
                 "context": {
-                    "required": false,
-                    "default": "view",
+                    "description": "Рамки в которых сделан запрос, определяют поля в ответе.",
+                    "type": "string",
                     "enum": [
                         "view",
                         "embed",
                         "edit"
                     ],
-                    "description": "Рамки в которых сделан запрос, определяют поля в ответе.",
-                    "type": "string"
+                    "default": "view",
+                    "required": false
                 },
                 "page": {
-                    "required": false,
-                    "default": 1,
                     "description": "Текущая страница коллекции.",
-                    "type": "integer"
+                    "type": "integer",
+                    "default": 1,
+                    "minimum": 1,
+                    "required": false
                 },
                 "per_page": {
-                    "required": false,
-                    "default": 10,
                     "description": "Максимальное число объектов возвращаемое в выборке.",
-                    "type": "integer"
+                    "type": "integer",
+                    "default": 10,
+                    "minimum": 1,
+                    "maximum": 100,
+                    "required": false
                 },
                 "search": {
-                    "required": false,
                     "description": "Ограничить результаты до совпадающих со строкой.",
-                    "type": "string"
+                    "type": "string",
+                    "required": false
                 },
                 "exclude": {
-                    "required": false,
-                    "default": [],
                     "description": "Убедиться что выборка исключает определенные ID.",
                     "type": "array",
                     "items": {
                         "type": "integer"
-                    }
+                    },
+                    "default": [],
+                    "required": false
                 },
                 "include": {
-                    "required": false,
-                    "default": [],
                     "description": "Ограничить выборку до определенных ID.",
                     "type": "array",
                     "items": {
                         "type": "integer"
-                    }
+                    },
+                    "default": [],
+                    "required": false
                 },
                 "offset": {
-                    "required": false,
                     "description": "Сдвиг выборки на определенное число объектов.",
-                    "type": "integer"
+                    "type": "integer",
+                    "required": false
                 },
                 "order": {
-                    "required": false,
                     "default": "asc",
+                    "description": "Упорядочить сортировку атрибута по возрастанию или убыванию.",
                     "enum": [
                         "asc",
                         "desc"
                     ],
-                    "description": "Упорядочить сортировку атрибута по возрастанию или убыванию.",
-                    "type": "string"
+                    "type": "string",
+                    "required": false
                 },
                 "orderby": {
-                    "required": false,
                     "default": "name",
+                    "description": "Сортировать коллекцию по атрибуту объекта.",
                     "enum": [
                         "id",
                         "include",
@@ -84,32 +87,32 @@
                         "email",
                         "url"
                     ],
-                    "description": "Сортировать коллекцию по атрибуту объекта.",
-                    "type": "string"
+                    "type": "string",
+                    "required": false
                 },
                 "slug": {
-                    "required": false,
                     "description": "Ограничить выборку пользователями с одним или более специальными ярлыками.",
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "required": false
                 },
                 "roles": {
-                    "required": false,
                     "description": "Ограничить выборку до пользователей удовлетворяющих как минимум одной указанной роли. Можно указать CSV список или одну роль.",
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "required": false
                 },
                 "who": {
-                    "required": false,
+                    "description": "Ограничить выборку пользователями-авторами.",
+                    "type": "string",
                     "enum": [
                         "authors"
                     ],
-                    "description": "Ограничить выборку пользователями-авторами.",
-                    "type": "string"
+                    "required": false
                 }
             }
         },
@@ -119,78 +122,80 @@
             ],
             "args": {
                 "username": {
-                    "required": true,
                     "description": "Имя входа для пользователя.",
-                    "type": "string"
+                    "type": "string",
+                    "required": true
                 },
                 "name": {
-                    "required": false,
                     "description": "Отображаемое имя пользователя.",
-                    "type": "string"
+                    "type": "string",
+                    "required": false
                 },
                 "first_name": {
-                    "required": false,
                     "description": "Имя пользователя.",
-                    "type": "string"
+                    "type": "string",
+                    "required": false
                 },
                 "last_name": {
-                    "required": false,
                     "description": "Фамилия пользователя.",
-                    "type": "string"
+                    "type": "string",
+                    "required": false
                 },
                 "email": {
-                    "required": true,
-                    "description": "Адрес e-mail пользователя.",
-                    "type": "string"
+                    "description": "Адрес email пользователя.",
+                    "type": "string",
+                    "format": "email",
+                    "required": true
                 },
                 "url": {
-                    "required": false,
                     "description": "URL пользователя.",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uri",
+                    "required": false
                 },
                 "description": {
-                    "required": false,
                     "description": "Описание пользователя.",
-                    "type": "string"
+                    "type": "string",
+                    "required": false
                 },
                 "locale": {
-                    "required": false,
+                    "description": "Локаль для пользователя.",
+                    "type": "string",
                     "enum": [
                         "",
                         "en_US",
-                        "ru_RU",
-                        "uk"
+                        "ru_RU"
                     ],
-                    "description": "Локаль для пользователя.",
-                    "type": "string"
+                    "required": false
                 },
                 "nickname": {
-                    "required": false,
                     "description": "Ник пользователя.",
-                    "type": "string"
+                    "type": "string",
+                    "required": false
                 },
                 "slug": {
-                    "required": false,
                     "description": "Буквенно-цифровой идентификатор пользователя.",
-                    "type": "string"
+                    "type": "string",
+                    "required": false
                 },
                 "roles": {
-                    "required": false,
                     "description": "Роли назначенные пользователю.",
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "required": false
                 },
                 "password": {
-                    "required": true,
                     "description": "Пароль пользователя (никогда не показывается).",
-                    "type": "string"
+                    "type": "string",
+                    "required": true
                 },
                 "meta": {
-                    "required": false,
                     "description": "Мета поля.",
-                    "type": "object"
+                    "type": "object",
+                    "properties": [],
+                    "required": false
                 }
             }
         }
@@ -242,7 +247,7 @@
                 ]
             },
             "email": {
-                "description": "Адрес e-mail пользователя.",
+                "description": "Адрес email пользователя.",
                 "type": "string",
                 "format": "email",
                 "context": [
@@ -286,8 +291,7 @@
                 "enum": [
                     "",
                     "en_US",
-                    "ru_RU",
-                    "uk"
+                    "ru_RU"
                 ],
                 "context": [
                     "edit"
@@ -404,6 +408,10 @@
         }
     },
     "_links": {
-        "self": "http://wptest.ru/wp-json/wp/v2/users"
+        "self": [
+            {
+                "href": "https://wp-kama.ru/api/wp/v2/users"
+            }
+        ]
     }
 }
